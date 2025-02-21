@@ -7,12 +7,19 @@
 
 import SwiftUI
 
-struct MainViewModel: View {
-    var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+class MainViewModel: ObservableObject {
+    
+    static var shared: MainViewModel = MainViewModel()
+    
+    @Published var userName: String = ""
+    @Published var email: String = ""
+    @Published var password: String = ""
+    @Published var isShowPassword: Bool = false
+    
+    
+    init( ) {
+        
+   
+        
     }
-}
-
-#Preview {
-    MainViewModel()
 }
