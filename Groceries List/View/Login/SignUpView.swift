@@ -13,14 +13,16 @@ struct SignUpView: View {
     
     var body: some View {
         
-     
             VStack{
                 
-                Text("Grocery Shopping App")
-                    .font(.customfont(.bold, fontSize: 24))
-                    .foregroundColor(.red.opacity(0.8))
-                    .padding(.top, .topInsets + 20)
                 
+                Text("Create a new Account")
+                    .font(.customfont(.bold, fontSize: 26))
+                    .foregroundColor(.red)
+                    .padding(.top, .topInsets + 60)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal, 20)
+
                 
                 ScrollView{
                     
@@ -33,7 +35,7 @@ struct SignUpView: View {
                         
                         
                         SecureLineField(text: $mainVM.password, title: "Password", placeholder: "Enter your password", isShowPassword: $mainVM.isShowPassword)
-                            .padding(.bottom, .screenWidth * 0.07)
+                            .padding(.bottom, .screenWidth * 0.12)
                         
                         HStack{
                             Text("By continuing you agree to our ")
@@ -51,11 +53,30 @@ struct SignUpView: View {
                         }
                         .padding(.bottom, .screenWidth * 0.07)
                         
+                        
+                        CustomButton(title: "Sign Up")
+                            .padding(.bottom, .screenWidth * 0.02)
+                        
+                        
+                        NavigationLink(destination: SignInView()){
+                            HStack{
+                                Text("Already have an account?")
+                                    .font(.customfont(.semibold, fontSize: 18))
+                                    .foregroundColor(.primaryText)
+                                
+                                
+                                Text("Sign In")
+                                    .font(.customfont(.semibold, fontSize: 18))
+                                    .foregroundColor(.blue)
+                            }
+                        }
+                        
+                        Spacer()
                     }
                     .padding(.horizontal, 20)
                     .padding(.bottom, .bottomInsets)
                 }
-                .padding(.top, 40)
+                .padding(.top, 10)
 
             }
             .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -75,5 +96,8 @@ struct SignUpView: View {
 }
 
 #Preview {
-    SignUpView()
+    
+    NavigationStack{
+        SignUpView()
+    }
 }
