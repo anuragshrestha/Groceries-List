@@ -19,7 +19,5 @@ class MainViewModel: ObservableObject {
     
     init( ) {
         
-   
-        
     }
 }

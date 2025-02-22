@@ -20,7 +20,7 @@ struct CustomButton: View {
             didTap?()
         }label: {
             Text(title)
-                .font(.customfont(.semibold, fontSize: 18))
+                .font(.customfont(.semibold, fontSize: 22))
                 .foregroundColor(color)
                 .multilineTextAlignment(.center)
         }

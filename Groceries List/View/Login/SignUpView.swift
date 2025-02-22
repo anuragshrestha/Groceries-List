@@ -88,8 +88,6 @@ struct SignUpView: View {
                 .ignoresSafeArea()
             )
             .navigationTitle("")
-            .navigationBarBackButtonHidden(true)
-            .navigationBarHidden(true)
             .ignoresSafeArea()
         
     }

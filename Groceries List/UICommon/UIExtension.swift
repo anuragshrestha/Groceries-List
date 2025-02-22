@@ -150,6 +150,7 @@ struct ShowButton: ViewModifier {
             } label: {
                 Image(systemName: isShow ? "eye.fill" : "eye.slash.fill")
                     .foregroundColor(.textTitle)
+                    .padding(.trailing, 5)
             }
         }
      
