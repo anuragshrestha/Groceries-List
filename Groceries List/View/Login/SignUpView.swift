@@ -9,7 +9,17 @@ import SwiftUI
 
 struct SignUpView: View {
     
-    @StateObject var mainVM = MainViewModel.shared;
+    @StateObject var signUPVM = SignUpViewModel()
+    @State private var showAlert = false
+
+    
+    // A computed binding that checks if errorMessage exists
+    private var showAlertBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.signUPVM.errorMessage != nil },
+            set: { _ in self.signUPVM.errorMessage = nil }
+        )
+    }
     
     var body: some View {
         
@@ -27,14 +37,14 @@ struct SignUpView: View {
                 ScrollView{
                     
                     VStack{
-                        LineTextField(text: $mainVM.userName, title: "User name", placeholder: "Enter your user name")
+                        LineTextField(text: $signUPVM.userName, title: "Full Name", placeholder: "Enter your full name")
                             .padding(.bottom, .screenWidth * 0.07)
                         
-                        LineTextField(text: $mainVM.email, title: "Email", placeholder:"Enter your email", keyboardType: .emailAddress)
+                        LineTextField(text: $signUPVM.email, title: "Email", placeholder:"Enter your email", keyboardType: .emailAddress)
                             .padding(.bottom, .screenWidth * 0.07)
                         
                         
-                        SecureLineField(text: $mainVM.password, title: "Password", placeholder: "Enter your password", isShowPassword: $mainVM.isShowPassword)
+                        SecureLineField(text: $signUPVM.password, title: "Password", placeholder: "Enter your password", isShowPassword: $signUPVM.isShowPassword)
                             .padding(.bottom, .screenWidth * 0.12)
                         
                         HStack{
@@ -54,10 +64,10 @@ struct SignUpView: View {
                         .padding(.bottom, .screenWidth * 0.07)
                         
                         
-                        CustomButton(title: "Sign Up")
+                        CustomButton(title: "Sign Up", didTap: {signUPVM.signUp()})
                             .padding(.bottom, .screenWidth * 0.02)
                         
-                        
+                
                         NavigationLink(destination: SignInView()){
                             HStack{
                                 Text("Already have an account?")
@@ -88,10 +98,25 @@ struct SignUpView: View {
                 .ignoresSafeArea()
             )
             .navigationTitle("")
+            .navigationBarBackButtonHidden(true)
+            .navigationBarHidden(true)
             .ignoresSafeArea()
+            .navigationDestination(isPresented: $signUPVM.isSignedUp) {
+                ConfirmationPage(email: signUPVM.email)
+            }
+            .alert(isPresented: showAlertBinding)
+        {
+            Alert(
+                title: Text("Error"),
+                message: Text(signUPVM.errorMessage ?? "An unknown error occurred."),
+                dismissButton: .default(Text("OK"))
+            )
+        }
         
     }
 }
+
+
 
 #Preview {
     
