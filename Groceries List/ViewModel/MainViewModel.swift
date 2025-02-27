@@ -5,7 +5,8 @@
 //  Created by Anurag Shrestha on 2/21/25.
 //
 
-import SwiftUI
+import Foundation
+import Combine
 
 class MainViewModel: ObservableObject {
     
@@ -14,6 +15,7 @@ class MainViewModel: ObservableObject {
     @Published var userName: String = ""
     @Published var email: String = ""
     @Published var password: String = ""
+    @Published var confirmationCode: String = ""
     @Published var isShowPassword: Bool = false
     
     

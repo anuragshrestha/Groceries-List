@@ -78,6 +78,8 @@ struct SignInView: View {
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.ignoresSafeArea())
         .navigationTitle("")
+        .navigationBarBackButtonHidden(true)
+        .navigationBarHidden(true)
     }
     
     
