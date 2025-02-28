@@ -6,3 +6,10 @@
 //
 
 import Foundation
+
+class HomeViewModel: ObservableObject{
+    
+    @Published var selectedTab: Int = 0
+    @Published var username: String = ""
+    @Published var name:String = ""
+}
