@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-struct FavoriteScreen: View {
+struct HistoryScreen: View {
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        Text("History screen")
     }
 }
 
 #Preview {
-    FavoriteScreen()
+    HistoryScreen()
 }
