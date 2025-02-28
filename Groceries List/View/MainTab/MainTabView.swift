@@ -18,11 +18,7 @@ struct MainTabView: View {
                 HomeScreen().tag(0)
                 HistoryScreen().tag(1)
             }
-            .onAppear{
-                UIScrollView.appearance().isScrollEnabled = false
-            }
-            .tabViewStyle(.page(indexDisplayMode: .never))
-            
+            .tabViewStyle(.automatic)
             
             HStack{
                 
@@ -57,5 +53,9 @@ struct MainTabView: View {
 }
 
 #Preview {
-    MainTabView()
+    
+    NavigationStack{
+        MainTabView()
+    }
+  
 }
