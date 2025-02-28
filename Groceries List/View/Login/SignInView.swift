@@ -9,7 +9,15 @@ import SwiftUI
 
 struct SignInView: View {
     
-    @StateObject var loginVM = MainViewModel.shared
+    @StateObject var loginVM = SignInViewModel()
+    
+    // A computed binding that checks if errorMessage exists
+    private var showAlertBinding: Binding<Bool> {
+        Binding<Bool>(
+            get: { self.loginVM.errorMessage != nil },
+            set: { _ in self.loginVM.errorMessage = nil }
+        )
+    }
     
     var body: some View {
         
@@ -38,7 +46,7 @@ struct SignInView: View {
      
             VStack{
                
-                InputField(text: $loginVM.email, placeholder: "Enter your email address")
+                InputField(text: $loginVM.username, placeholder: "Enter your email address")
                     .padding(.bottom, .screenWidth * 0.07)
                     .padding(.top, 40)
                 
@@ -57,7 +65,8 @@ struct SignInView: View {
                 .padding(.bottom, .screenWidth * 0.01)
               
               
-                CustomButton(title: "Log In")
+                CustomButton(title: "Log In", didTap:
+                    {loginVM.signIn()})
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
                 
@@ -77,6 +86,16 @@ struct SignInView: View {
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity)
         .background(Color.white.ignoresSafeArea())
+        .navigationDestination(isPresented: $loginVM.isSignIn) {
+            MainTabView()
+        }
+        .alert(isPresented: showAlertBinding, content: {
+            Alert(
+                title: Text("Error"),
+                message: Text(loginVM.errorMessage ?? "Invalid error"),
+                dismissButton: .default(Text("OK"))
+            )
+        })
         .navigationTitle("")
         .navigationBarBackButtonHidden(true)
         .navigationBarHidden(true)
