@@ -38,7 +38,7 @@ class GroceryService{
         //creates a HTTP request
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
-        request.setValue("application/json", forHTTPHeaderField: "Cotent-Type")
+        request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         request.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
         do{
@@ -64,6 +64,8 @@ class GroceryService{
             if httpResponse.statusCode == 200 {
                 completion(.success("Grocery item added successfully"))
             }else{
+                print("data: ", data ?? "no data")
+                print("response from sevrer ", response ?? "no response")
                 completion(.failure(NSError(domain: "API Error", code: httpResponse.statusCode, userInfo: nil)))
             }
         }.resume()
