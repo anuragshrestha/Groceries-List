@@ -45,16 +45,6 @@
 			path = "Groceries ListUITests";
 			sourceTree = "<group>";
 		};
-		E9F5CAF92D800493000A1A5D /* Service */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Service;
-			sourceTree = "<group>";
-		};
-		E9F5CAFC2D8004B5000A1A5D /* Model */ = {
-			isa = PBXFileSystemSynchronizedRootGroup;
-			path = Model;
-			sourceTree = "<group>";
-		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +75,6 @@
 		E987DBF02D69012D00D8F512 = {
 			isa = PBXGroup;
 			children = (
-				E9F5CAFC2D8004B5000A1A5D /* Model */,
-				E9F5CAF92D800493000A1A5D /* Service */,
 				E987DBFB2D69012E00D8F512 /* Groceries List */,
 				E987DC0F2D69013000D8F512 /* Groceries ListTests */,
 				E987DC192D69013000D8F512 /* Groceries ListUITests */,
@@ -121,8 +109,6 @@
 			);
 			fileSystemSynchronizedGroups = (
 				E987DBFB2D69012E00D8F512 /* Groceries List */,
-				E9F5CAF92D800493000A1A5D /* Service */,
-				E9F5CAFC2D8004B5000A1A5D /* Model */,
 			);
 			name = "Groceries List";
 			packageProductDependencies = (
