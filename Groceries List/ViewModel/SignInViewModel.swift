@@ -72,16 +72,33 @@ class SignInViewModel: ObservableObject{
                 }
                 
                 if httpResponse.statusCode == 200 {
-                    self.isSignIn = true
+                    do{
+                        let response = try JSONDecoder().decode(signInResponse.self, from: data)
+                        self.saveToken(response.token)
+                        print("jwt token ", response.token)
+                        self.isSignIn = true
+                    } catch {
+                        self.errorMessage = "Failed to decode response"
+                    }
+                   
                 }else{
                     self.handleServerError(data: data)
                 }
             }
         }.resume()
-        
-        
     }
     
+    
+    //save the jwt token
+    private func saveToken(_ token:String) {
+        UserDefaults.standard.set(token, forKey: "jwtToken")
+        UserDefaults.standard.synchronize()
+    }
+    
+    //retrieve the token
+    func getToken() -> String? {
+        return UserDefaults.standard.string(forKey: "jwtToken")
+    }
 
 
 
@@ -110,6 +127,10 @@ class SignInViewModel: ObservableObject{
 struct signInRequest: Codable{
     let username: String
     let password:String
+}
+
+struct signInResponse: Codable{
+    let token: String
 }
 
 struct signInError: Codable{

@@ -49,6 +49,30 @@ struct AddGrocery: View {
                 }
                 .padding()
                 
+                Button(action: {
+                    addVM.addGrocery()
+                }){
+                    Text("Add Grocry")
+                        .padding()
+                        .frame(maxWidth: .infinity, maxHeight: 40)
+                        .background(Color.blue)
+                        .foregroundColor(.white)
+                        .font(.customfont(.semibold, fontSize: 22))
+                        .cornerRadius(10)
+                    
+                }
+                .padding()
+                
+                if let errorMessage = addVM.errorMessage {
+                    Text(errorMessage)
+                        .foregroundColor(.red)
+                        .padding()
+                }
+                
+                if addVM.isLoading {
+                    ProgressView()
+                }
+                
             }
             .navigationTitle("Add Grocery")
             .ignoresSafeArea()
