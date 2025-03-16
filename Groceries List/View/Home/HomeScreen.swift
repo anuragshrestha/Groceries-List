@@ -9,14 +9,7 @@ import SwiftUI
 
 struct HomeScreen: View {
     
-    // Sample grocery data
-    let groceries = [
-        ("Apples", "2 kg", "02/28/25"),
-        ("Milk", "1 L", "03/01/25"),
-        ("Bread", "1 Pack", "02/27/25"),
-        ("Eggs", "12", "02/28/25"),
-        ("Rice", "5 kg", "03/05/25")
-    ]
+    @StateObject private var viewModel = HomeViewModel()
     
     var body: some View {
     
@@ -50,49 +43,41 @@ struct HomeScreen: View {
                     }
                     .padding(.top, 10)
                     .padding(.horizontal, 20)
-            
-                    
-                ZStack{
-                    
-                    Color.green.opacity(0.6)
-                        .edgesIgnoringSafeArea(.bottom)
-                        .frame(maxWidth: .infinity)
-                        .ignoresSafeArea()
-                    
-                    ScrollView {
-                        
-                        VStack(spacing:8){
-                            ForEach(groceries, id:\.0) { grocery in
-                                HStack(spacing:5){
-                                    Text(grocery.0)
-                                        .frame(maxWidth: .infinity, alignment: .leading )
-                                        .font(.system(size: 18))
-                                        
-                                        
-                                    Text(grocery.1)
-                                        .frame(width: 65, alignment: .center)
-                                        .font(.system(size: 18))
-                                    
-                                    Text(grocery.2)
-                                        .frame(width:85, alignment: .trailing)
-                                        .font(.system(size: 18))
-                                }
-                                .padding(.top, 3)
-                                
-                                Divider()
-                                    .background(Color.black)
-                                
-                            }
-                        }
-                      
-                      }
-                       .padding(.horizontal, 20)
+                
+                List {
+                   ForEach(viewModel.groceryLists) { groceryList in
+                       HStack(spacing: 1) {
+                           Text(groceryList.groceries.groceryName)
+                               .frame(maxWidth: .infinity, alignment: .leading)
+                               .font(.system(size: 18))
+                           
+                            Text(groceryList.groceries.quantity)
+                               .frame(width: 55, alignment: .center)
+                               .font(.system(size: 18))
+                           
+                           Text(groceryList.groceries.dueDate)
+                               .frame(width:105, alignment: .trailing)
+                               .font(.system(size: 18))
+                       }
+                       .frame(maxWidth: .infinity)
+                   }
+                }
+                .listStyle(PlainListStyle())
+                .scrollContentBackground(.hidden)
+                .background(Color.gray.opacity(0.2))
+                .onAppear{
+                    Task {
+                        await viewModel.fetchGroceries()
                     }
                 }
+                .refreshable {
+                    await viewModel.fetchGroceries()
+                }
+               }
                 .frame(maxWidth: .infinity, maxHeight: .infinity)
+                .background(Color.gray.opacity(0.2))
             }
-    
-         
+
         }
         
     }
