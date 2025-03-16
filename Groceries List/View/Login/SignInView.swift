@@ -10,6 +10,7 @@ import SwiftUI
 struct SignInView: View {
     
     @StateObject var loginVM = SignInViewModel()
+    @StateObject var homeViewModel = HomeViewModel()
     
     // A computed binding that checks if errorMessage exists
     private var showAlertBinding: Binding<Bool> {
@@ -66,7 +67,11 @@ struct SignInView: View {
               
               
                 CustomButton(title: "Log In", didTap:
-                    {loginVM.signIn()})
+                        {
+                    Task {
+                        await loginVM.signIn(homeViewModel: homeViewModel)
+                }
+                })
                     .padding(.horizontal, 20)
                     .padding(.bottom, 10)
                 
