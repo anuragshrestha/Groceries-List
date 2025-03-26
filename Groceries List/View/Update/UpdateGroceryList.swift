@@ -56,7 +56,7 @@ struct UpdateGroceryList: View {
                 
                 HStack{
                     Button(action: {
-                        
+                        print("list id: ", listId)
                     }){
                         Text("Update")
                             .padding()
@@ -70,7 +70,7 @@ struct UpdateGroceryList: View {
                     .padding()
                     
                     Button(action: {
-                        
+                        print("list id: ", listId)
                     }){
                         Text("Delete")
                             .padding()
@@ -84,7 +84,7 @@ struct UpdateGroceryList: View {
                     .padding()
                     
                     Button(action: {
-                        
+                        print("list id: ", listId)
                     }){
                         Text("Complete")
                             .padding()
