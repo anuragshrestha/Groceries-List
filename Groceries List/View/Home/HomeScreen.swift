@@ -46,6 +46,14 @@ struct HomeScreen: View {
                 
                 List {
                    ForEach(viewModel.groceryLists) { groceryList in
+                       NavigationLink(
+                        destination: UpdateGroceryList(
+                            listId: groceryList.id,
+                            groceryName: groceryList.groceries.groceryName,
+                            quantity: groceryList.groceries.quantity,
+                            date: convertDate(from: groceryList.groceries.dueDate)
+                        ))
+                       {
                        HStack(spacing: 1) {
                            Text(groceryList.groceries.groceryName)
                                .frame(maxWidth: .infinity, alignment: .leading)
@@ -58,8 +66,9 @@ struct HomeScreen: View {
                            Text(groceryList.groceries.dueDate)
                                .frame(width:105, alignment: .trailing)
                                .font(.system(size: 18))
+                           }
+                           .frame(maxWidth: .infinity)
                        }
-                       .frame(maxWidth: .infinity)
                    }
                 }
                 .listStyle(PlainListStyle())
@@ -78,6 +87,12 @@ struct HomeScreen: View {
                 .background(Color.gray.opacity(0.2))
             }
 
+        }
+    
+        func convertDate(from string: String) -> Date {
+            let formatter = DateFormatter()
+            formatter.dateFormat = "MM-dd-yyyy" // Update this format to match your `dueDate` format
+            return formatter.date(from: string) ?? Date()
         }
         
     }
