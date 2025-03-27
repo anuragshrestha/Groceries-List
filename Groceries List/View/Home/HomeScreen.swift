@@ -46,12 +46,15 @@ struct HomeScreen: View {
                 
                 List {
                    ForEach(viewModel.groceryLists) { groceryList in
+                       let grocery = groceryList.groceries
+                       let convertedDate = convertDate(from: grocery.dueDate)
+                       
                        NavigationLink(
                         destination: UpdateGroceryList(
                             listId: groceryList.id,
-                            groceryName: groceryList.groceries.groceryName,
-                            quantity: groceryList.groceries.quantity,
-                            date: convertDate(from: groceryList.groceries.dueDate)
+                            groceryName: grocery.groceryName,
+                            quantity: grocery.quantity,
+                            dueDate: convertedDate
                         ))
                        {
                        HStack(spacing: 1) {
@@ -91,7 +94,7 @@ struct HomeScreen: View {
     
         func convertDate(from string: String) -> Date {
             let formatter = DateFormatter()
-            formatter.dateFormat = "MM-dd-yyyy" // Update this format to match your `dueDate` format
+            formatter.dateFormat = "yyyy-MM-dd" // Update this format to match your `dueDate` format
             return formatter.date(from: string) ?? Date()
         }
         
