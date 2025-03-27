@@ -31,7 +31,7 @@ class AddGroceryViewModel: ObservableObject {
         dateFormatter.dateFormat = "yyyy-MM-dd"
         let formattedDate = dateFormatter.string(from: currentTime)
         
-        let item = GroceryItem(groceryName: groceryItem, quantity: quantity, dueDate: formattedDate)
+        let item = GroceryItem(groceryName: groceryItem, quantity: quantity, dueDate: formattedDate, listId: nil)
         
         isLoading = true
         
