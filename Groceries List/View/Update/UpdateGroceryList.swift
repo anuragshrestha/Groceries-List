@@ -12,8 +12,11 @@ struct UpdateGroceryList: View {
     
     @State var groceryName: String
     @State var quantity:String
-    @State var date: Date
+    @State var dueDate: Date
     @State var isDatePickerPresented: Bool = false
+    
+    public var updateGroceryVM = UpdateGroceryViewModel()
+    @Environment(\.dismiss) var dismiss
     
     var body: some View {
         
@@ -34,7 +37,7 @@ struct UpdateGroceryList: View {
                     
                     InputField(text: Binding(
                         get: {
-                            formatDate(date)
+                            formatDate(dueDate)
                         },
                         set: { _ in
                             
@@ -57,6 +60,7 @@ struct UpdateGroceryList: View {
                 HStack{
                     Button(action: {
                         print("list id: ", listId)
+                        updateGroceryVM.updateGrocery(listId: listId, groceryName: groceryName, quantity: quantity, dueDate: dueDate)
                     }){
                         Text("Update")
                             .padding()
@@ -97,14 +101,17 @@ struct UpdateGroceryList: View {
                     }
                     .padding()
                 }
-           
-    
+            }
+            .onChange(of: updateGroceryVM.didUpdateSuccessfully) {
+                if updateGroceryVM.didUpdateSuccessfully {
+                    dismiss()
+                }
             }
             .navigationTitle("")
             .ignoresSafeArea()
             .sheet(isPresented: $isDatePickerPresented) {
                 VStack {
-                    DatePicker("Select Date", selection: $date, displayedComponents: [.date])
+                    DatePicker("Select Date", selection: $dueDate, displayedComponents: [.date])
                         .datePickerStyle(GraphicalDatePickerStyle())
                     
                     Button("Done") {
@@ -128,5 +135,5 @@ struct UpdateGroceryList: View {
 }
 
 #Preview {
-    UpdateGroceryList(listId: "adaHdiuvw1", groceryName: "Apple", quantity: "1", date: Date())
+    UpdateGroceryList(listId: "adaHdiuvw1", groceryName: "Apple", quantity: "1",  dueDate: Date())
 }
