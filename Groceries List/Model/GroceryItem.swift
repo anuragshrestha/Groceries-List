@@ -11,4 +11,5 @@ struct GroceryItem: Codable{
     let groceryName: String
     let quantity: String
     let dueDate: String
+    let listId: String?
 }
