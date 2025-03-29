@@ -15,7 +15,9 @@ struct UpdateGroceryList: View {
     @State var dueDate: Date
     @State var isDatePickerPresented: Bool = false
     
-    public var updateGroceryVM = UpdateGroceryViewModel()
+    @StateObject public var updateGroceryVM = UpdateGroceryViewModel()
+    @StateObject public var deleteGroceryVM = DeleteViewModel()
+    
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -75,6 +77,7 @@ struct UpdateGroceryList: View {
                     
                     Button(action: {
                         print("list id: ", listId)
+                        deleteGroceryVM.deleteGrocery(listId: listId)
                     }){
                         Text("Delete")
                             .padding()
@@ -100,10 +103,38 @@ struct UpdateGroceryList: View {
                         
                     }
                     .padding()
+                    
+                    if let errorMessage = updateGroceryVM.errorMessage {
+                        Text(errorMessage)
+                            .foregroundColor(.red)
+                            .padding()
+                    }
+                    
+                    if updateGroceryVM.isLoading {
+                        ProgressView()
+                    }
+                    
+                    if let errorMessage = deleteGroceryVM.errorMessage {
+                        Text(errorMessage)
+                            .foregroundStyle(.red)
+                            .padding()
+                    }
+                    
+                    if deleteGroceryVM.isLoading{
+                        ProgressView()
+                    }
+                    
                 }
             }
             .onChange(of: updateGroceryVM.didUpdateSuccessfully) {
+                print("updated successfully: \(updateGroceryVM.didUpdateSuccessfully)")
                 if updateGroceryVM.didUpdateSuccessfully {
+                    dismiss()
+                }
+            }
+            .onChange(of: deleteGroceryVM.isDeleted) {
+                print("deleted grocery successfully: \(deleteGroceryVM.isDeleted)")
+                if deleteGroceryVM.isDeleted {
                     dismiss()
                 }
             }
