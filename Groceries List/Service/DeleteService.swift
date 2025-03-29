@@ -25,12 +25,7 @@ class DeleteService {
     
     func deleteGrocery(listId: String, completion: @escaping (Result<String, Error>) -> Void) {
         
-        //checks if the list id is empty
-        guard !listId.isEmpty else {
-            completion(.failure(NSError(domain: "INVALID_INPUT", code: 400, userInfo: ["message":"listId is empty"])))
-            return
-        }
-        
+      
         //creates a URL object
         guard let url = URL(string: baseUrl) else {
             completion(.failure(NSError(domain: "Invalid url", code: -1, userInfo: nil)))
@@ -51,6 +46,18 @@ class DeleteService {
         httpRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         httpRequest.setValue("Bearer \(token)", forHTTPHeaderField: "Authorization")
         
+        //structre the data
+        let data : [String: Any] = ["listId": listId]
+        
+        
+        //encode the data ito JSON
+        do{
+            httpRequest.httpBody = try JSONSerialization.data(withJSONObject: data)
+        }catch{
+            completion(.failure(error))
+            return
+        }
+        
         URLSession.shared.dataTask(with: httpRequest) { data, response , error in
             if let error = error {
                 completion(.failure(error))
@@ -66,6 +73,7 @@ class DeleteService {
                 completion(.success("Grocery deleted successfully"))
                 
             }else{
+                print("status code: \(httpResponse.statusCode)")
                 completion(.failure(NSError(domain: "API Error", code: httpResponse.statusCode, userInfo: nil)))
             }
             
