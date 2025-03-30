@@ -67,7 +67,8 @@ class UpdateService{
         }
         
         //Makes Api call
-        URLSession.shared.dataTask(with: httpRequest) { data, response, error in if let error = error {
+        URLSession.shared.dataTask(with: httpRequest) { data, response, error in
+            if let error = error {
             completion(.failure(error))
             return
         }

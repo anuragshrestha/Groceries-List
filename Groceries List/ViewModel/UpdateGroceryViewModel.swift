@@ -16,6 +16,7 @@ class UpdateGroceryViewModel: ObservableObject {
     
     
     private let updateService = UpdateService()
+    
     /**
      - guards the input field
      - change the due date to string format
