@@ -17,7 +17,8 @@ struct UpdateGroceryList: View {
     
     @StateObject public var updateGroceryVM = UpdateGroceryViewModel()
     @StateObject public var deleteGroceryVM = DeleteViewModel()
-    
+    @StateObject public var completeGroceryVM = CompleteGroceryViewModel()
+        
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -92,6 +93,7 @@ struct UpdateGroceryList: View {
                     
                     Button(action: {
                         print("list id: ", listId)
+                        completeGroceryVM.completeGrocery(listId: listId, groceryName: groceryName, quantity: quantity, dueDate: dueDate)
                     }){
                         Text("Complete")
                             .padding()
@@ -103,6 +105,7 @@ struct UpdateGroceryList: View {
                         
                     }
                     .padding()
+                }
                     
                     if let errorMessage = updateGroceryVM.errorMessage {
                         Text(errorMessage)
@@ -123,8 +126,18 @@ struct UpdateGroceryList: View {
                     if deleteGroceryVM.isLoading{
                         ProgressView()
                     }
+                
+                    if let errorMessage = completeGroceryVM.errorMessage {
+                        Text(errorMessage)
+                            .foregroundStyle(.red)
+                            .padding()
+                    }
                     
-                }
+                    if completeGroceryVM.isLoading{
+                        ProgressView()
+                    }
+                    
+                
             }
             .onChange(of: updateGroceryVM.didUpdateSuccessfully) {
                 print("updated successfully: \(updateGroceryVM.didUpdateSuccessfully)")
@@ -135,6 +148,11 @@ struct UpdateGroceryList: View {
             .onChange(of: deleteGroceryVM.isDeleted) {
                 print("deleted grocery successfully: \(deleteGroceryVM.isDeleted)")
                 if deleteGroceryVM.isDeleted {
+                    dismiss()
+                }
+            }
+            .onChange(of: completeGroceryVM.isComplete) {
+                if completeGroceryVM.isComplete{
                     dismiss()
                 }
             }
