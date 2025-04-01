@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 
+@MainActor
 class FetchHistoryGrocery: ObservableObject {
     
     let baseUrl = "http://localhost:3000/grocery/history"
@@ -36,7 +37,6 @@ class FetchHistoryGrocery: ObservableObject {
             let (data, response) = try await URLSession.shared.data(for: request)
             
             guard let httpResponse = response as? HTTPURLResponse else{
-        
                 self.errorMessage = "Not a url response"
                 return
             }
@@ -48,7 +48,8 @@ class FetchHistoryGrocery: ObservableObject {
                 let decodeResponse = try JSONDecoder().decode(GroceryResponses.self, from: data)
                     self.groceryList = decodeResponse.groceryList
                     self.errorMessage = nil
-                
+            }else{
+                self.errorMessage = "HTTP Error: \(httpResponse.statusCode)"
             }
         }catch{
             self.errorMessage = "\(error)"
