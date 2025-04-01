@@ -94,5 +94,5 @@ swift test
 Here are a few glimpses of the Groceries List app in action:
 
 ### 🏠 SignIn Screen
-![SignIn Screen](./screenshots/home.png)
+![SignIn Screen](./Screenshots/home.png)
 
