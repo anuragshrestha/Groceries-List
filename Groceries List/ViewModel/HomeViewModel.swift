@@ -35,7 +35,7 @@ class HomeViewModel: ObservableObject{
         }
         
         guard let token = UserDefaults.standard.string(forKey: "jwtToken") else {
-         
+            
             self.errorMessage = "Invalid token"
             return
         }
@@ -61,9 +61,9 @@ class HomeViewModel: ObservableObject{
             
             if httpResponse.statusCode == 200 {
                 let decodeResponse = try JSONDecoder().decode(GroceryResponse.self, from: data)
+                
                     self.groceryLists = decodeResponse.groceryList
                     self.errorMessage = nil
-                
             }
         }catch{
             self.errorMessage = "\(error)"
