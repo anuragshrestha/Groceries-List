@@ -7,7 +7,8 @@
 
 import Foundation
 
-struct GroceryItem: Codable{
+struct GroceryItem: Identifiable,Codable{
+    var id: String { return listId ?? UUID().uuidString}
     let groceryName: String
     let quantity: String
     let dueDate: String
